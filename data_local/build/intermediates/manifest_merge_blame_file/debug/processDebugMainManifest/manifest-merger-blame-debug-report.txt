@@ -1,0 +1,27 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.vasberc.data_local" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="24"
+7        android:targetSdkVersion="24" />
+8
+9    <permission
+9-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+10        android:name="com.vasberc.data_local.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+10-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+11        android:protectionLevel="signature" />
+11-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+12
+13    <uses-permission android:name="com.vasberc.data_local.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+13-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+13-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+14
+15    <application
+16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+16-->[androidx.core:core:1.12.0] C:\Users\vasileiosb\.gradle\caches\transforms-3\c601c3bf24e07cf39c6e7c3bd5b5000d\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+17        android:debuggable="true"
+18        android:extractNativeLibs="false"
+19        android:testOnly="true" />
+20
+21</manifest>
