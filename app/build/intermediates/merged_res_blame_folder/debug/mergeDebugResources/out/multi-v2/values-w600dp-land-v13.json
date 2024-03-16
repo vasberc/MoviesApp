@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-35:/values-w600dp-land-v13/values-w600dp-land-v13.xml",
+            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-40:/values-w600dp-land-v13/values-w600dp-land-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\6e88b556f351a57be369770856a946d4\\transformed\\material-1.11.0\\res\\values-w600dp-land-v13\\values-w600dp-land-v13.xml",
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\235f047621d57ad2eb54a408307dba4a\\transformed\\material-1.11.0\\res\\values-w600dp-land-v13\\values-w600dp-land-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

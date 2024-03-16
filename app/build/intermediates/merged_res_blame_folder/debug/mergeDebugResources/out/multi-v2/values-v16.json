@@ -1,10 +1,20 @@
 {
     "logs": [
         {
-            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-35:/values-v16/values-v16.xml",
+            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-40:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\5804c9add63900a707cc25d4830ca1f1\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\c4988caa34e7397831895a49b36ad28b\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "65",
+                        "endOffsets": "116"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\7f332adfcb277fd2c18caf917ce8eab0\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -20,16 +30,6 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "289"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\7edfa094bbf2aaf7a390f4f3c8f46ba6\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endColumns": "65",
-                        "endOffsets": "116"
                     }
                 }
             ]

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-35:/values-ldltr-v21/values-ldltr-v21.xml",
+            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-40:/values-ldltr-v21/values-ldltr-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\5804c9add63900a707cc25d4830ca1f1\\transformed\\appcompat-1.6.1\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\7f332adfcb277fd2c18caf917ce8eab0\\transformed\\appcompat-1.6.1\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

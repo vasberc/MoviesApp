@@ -37,7 +37,9 @@ ksp {
 
 dependencies {
     ksp(libs.koiKsp)
+    ksp(libs.roomKsp)
     implementation(libs.bundles.core)
+    implementation(libs.bundles.dataLocal)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)
 }
