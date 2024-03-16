@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -30,7 +31,12 @@ android {
     }
 }
 
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
+}
+
 dependencies {
+    ksp(libs.koiKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)

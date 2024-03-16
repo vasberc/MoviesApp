@@ -1,11 +1,21 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.vasberc.movieflix"
     compileSdk = 34
+
+    //For KSP to access generated code
+    applicationVariants.configureEach {
+        kotlin.sourceSets {
+            getByName(name) {
+                kotlin.srcDir("build/generated/ksp/${name}/kotlin")
+            }
+        }
+    }
 
     defaultConfig {
         applicationId = "com.vasberc.movieflix"
@@ -35,10 +45,15 @@ android {
     }
 }
 
+ksp {
+    arg("KOIN_CONFIG_CHECK", "true")
+}
+
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":data_remote"))
     implementation(project(":data_local"))
+    ksp(libs.koiKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)

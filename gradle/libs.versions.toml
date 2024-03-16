@@ -9,10 +9,19 @@ appcompat = "1.6.1"
 material = "1.11.0"
 activity = "1.8.2"
 constraintlayout = "2.1.4"
+retrofit = "2.9.0"
+koinAndroid = "3.5.3"
+koinKsp = "1.3.1"
+ksp = "1.9.10-1.0.13"
 
 [libraries]
+#gradle
+gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 #core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koinAndroid" }
+koinAnnotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koinKsp" }
+koiKsp = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinKsp" }
 #testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -22,15 +31,19 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-
+#data-remote
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitConverter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 [bundles]
-core = ["androidx-core-ktx"]
+core = ["androidx-core-ktx", "koinAndroid", "koinAnnotations", "koiKsp"]
 presentation = ["androidx-appcompat", "material", "androidx-activity", "androidx-constraintlayout"]
+dataRemote = ["retrofit", "retrofitConverter"]
 testing = ["junit"]
 androidTesting = ["androidx-junit", "androidx-espresso-core"]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-29:/values-sw600dp-v13/values-sw600dp-v13.xml",
+            "outputFile": "com.vasberc.movieflix.app-mergeDebugResources-35:/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\f99380857eaf90b35b97df8053f4a2c5\\transformed\\material-1.11.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\6e88b556f351a57be369770856a946d4\\transformed\\material-1.11.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\5e3fbc5935dc927ec8ef2870e6fa5af5\\transformed\\appcompat-1.6.1\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\vasileiosb\\.gradle\\caches\\transforms-3\\5804c9add63900a707cc25d4830ca1f1\\transformed\\appcompat-1.6.1\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
