@@ -1,5 +1,3 @@
-import java.net.URI
-
 pluginManagement {
     repositories {
         google {
@@ -26,3 +24,4 @@ include(":app")
 include(":presentation")
 include(":data_remote")
 include(":data_local")
+include(":data")

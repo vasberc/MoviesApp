@@ -35,8 +35,9 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 #data-remote
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofitConverter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-#dat-local
+#data-local
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 roomPaging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 roomKsp = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
@@ -44,7 +45,7 @@ roomKsp = { group = "androidx.room", name = "room-compiler", version.ref = "room
 core = ["androidx-core-ktx", "koinAndroid", "koinAnnotations", "koiKsp"]
 presentation = ["androidx-appcompat", "material", "androidx-activity", "androidx-constraintlayout"]
 dataRemote = ["retrofit", "retrofitConverter"]
-dataLocal = ["roomRuntime", "roomPaging"]
+dataLocal = ["roomRuntime", "roomPaging", "roomKtx"]
 testing = ["junit"]
 androidTesting = ["androidx-junit", "androidx-espresso-core"]
 

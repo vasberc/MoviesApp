@@ -51,8 +51,7 @@ ksp {
 
 dependencies {
     implementation(project(":presentation"))
-    implementation(project(":data_remote"))
-    implementation(project(":data_local"))
+    implementation(project(":data"))
     ksp(libs.koiKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)

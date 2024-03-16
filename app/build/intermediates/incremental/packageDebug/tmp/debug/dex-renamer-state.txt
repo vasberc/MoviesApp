@@ -1,4 +1,4 @@
-#Sat Mar 16 17:13:17 EET 2024
+#Sat Mar 16 18:22:22 EET 2024
 base.0=C\:\\Users\\vasileiosb\\AndroidStudioProjects\\MovieFlix\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\vasileiosb\\AndroidStudioProjects\\MovieFlix\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\10\\classes.dex
 base.10=C\:\\Users\\vasileiosb\\AndroidStudioProjects\\MovieFlix\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex

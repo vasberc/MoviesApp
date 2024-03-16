@@ -1,8 +1,7 @@
 package com.vasberc.movieflix
 
 import android.app.Application
-import com.vasberc.data_local.di.DataLocalModule
-import com.vasberc.data_remote.di.DataRemoteModule
+import com.vasberc.data.di.DataModule
 import com.vasberc.presentation.di.PresentationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -15,7 +14,7 @@ class MovieFlixApp: Application() {
 
         startKoin {
             androidContext(this@MovieFlixApp)
-            modules(PresentationModule().module, DataRemoteModule().module, DataLocalModule().module)
+            modules(PresentationModule().module, DataModule().module)
         }
     }
 }
