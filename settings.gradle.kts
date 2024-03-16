@@ -22,6 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "MovieFlix"
 include(":app")
 include(":presentation")
-include(":data_remote")
-include(":data_local")
+include(":data:data_remote")
+include(":data:data_local")
 include(":data")

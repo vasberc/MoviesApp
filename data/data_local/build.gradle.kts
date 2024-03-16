@@ -36,7 +36,7 @@ ksp {
 }
 
 dependencies {
-    ksp(libs.koiKsp)
+    ksp(libs.koinKsp)
     ksp(libs.roomKsp)
     implementation(libs.bundles.core)
     implementation(libs.bundles.dataLocal)

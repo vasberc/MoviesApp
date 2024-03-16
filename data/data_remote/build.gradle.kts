@@ -43,7 +43,7 @@ ksp {
 }
 
 dependencies {
-    ksp(libs.koiKsp)
+    ksp(libs.koinKsp)
     implementation(libs.bundles.core)
     implementation(libs.bundles.dataRemote)
     testImplementation(libs.bundles.testing)

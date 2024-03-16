@@ -8,8 +8,8 @@
 .externalNativeBuild
 .cxx
 local.properties
-app/build/
+app/build
 presentation/build
-data_remote/build
-data_local/build
+data/data_remote/build
+data/data_local/build
 data/build

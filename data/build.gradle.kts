@@ -36,9 +36,9 @@ ksp {
 }
 
 dependencies {
-    implementation(project(":data_remote"))
-    implementation(project(":data_local"))
-    ksp(libs.koiKsp)
+    implementation(project(":data:data_remote"))
+    implementation(project(":data:data_local"))
+    ksp(libs.koinKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)

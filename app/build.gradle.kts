@@ -52,7 +52,7 @@ ksp {
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":data"))
-    ksp(libs.koiKsp)
+    ksp(libs.koinKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)
