@@ -3,4 +3,5 @@
     <string name="movie_cover_image">Movie cover image</string>
     <string name="press_to_change_favourite_state">Press to change favourite state</string>
     <string name="press_to_scroll_to_top">Press to scroll to top</string>
+    <string name="retry">retry</string>
 </resources>

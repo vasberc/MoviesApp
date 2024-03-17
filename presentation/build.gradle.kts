@@ -40,6 +40,7 @@ ksp {
 }
 
 dependencies {
+    implementation(project(":data"))
     ksp(libs.koinKsp)
     implementation(libs.bundles.core)
     implementation(libs.bundles.presentation)

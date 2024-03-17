@@ -11,5 +11,7 @@ local.properties
 app/build
 presentation/build
 data/data_remote/build
+data_remote/build
 data/data_local/build
+data_local/build
 data/build

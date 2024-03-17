@@ -23,7 +23,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        android.buildFeatures.buildConfig = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,6 +34,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("Boolean", "DEBUG", "false")
+        }
+        debug {
+            buildConfigField("Boolean", "DEBUG", "true")
         }
     }
     compileOptions {
@@ -52,6 +56,8 @@ ksp {
 dependencies {
     implementation(project(":presentation"))
     implementation(project(":data"))
+    implementation(project(":data_local"))
+    implementation(project(":data_remote"))
     ksp(libs.koinKsp)
     implementation(libs.bundles.core)
     testImplementation(libs.bundles.testing)

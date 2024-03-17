@@ -9,7 +9,7 @@ import androidx.viewbinding.ViewBinding
 abstract  class BaseFragment<BINDING: ViewBinding>(@LayoutRes layout: Int): Fragment(layout) {
 
     private var _binding: BINDING? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     protected abstract fun createViewBinding(view: View): BINDING
 

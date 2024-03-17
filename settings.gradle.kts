@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+@Suppress("UnstableApiUsage")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -22,6 +23,6 @@ dependencyResolutionManagement {
 rootProject.name = "MovieFlix"
 include(":app")
 include(":presentation")
-include(":data:data_remote")
-include(":data:data_local")
+include(":data_remote")
+include(":data_local")
 include(":data")
