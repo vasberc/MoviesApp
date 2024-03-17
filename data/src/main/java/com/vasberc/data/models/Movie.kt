@@ -72,6 +72,17 @@ fun GetPopularMoviesResponse.Result.asMovie(): Movie {
     )
 }
 
+fun GetPopularMoviesResponse.Result.asMovie(imageBaseUrl: String, imageSize: String): Movie {
+    return Movie(
+        backdropPath = backdropPath?.let { "$imageBaseUrl$imageSize/$it" } ?: "",
+        id = id ?: -1,
+        releaseDate = releaseDate ?: "",
+        title = title ?: "",
+        voteAverage = voteAverage ?: 0.0,
+        isFavourite = false
+    )
+}
+
 fun CachedMovieEntity.asMovie(): Movie {
     return Movie(
         backdropPath = backdropPath ?: "",

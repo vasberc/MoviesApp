@@ -4,8 +4,13 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import com.vasberc.data.models.ErrorModel
+import com.vasberc.data.models.ImagesConfiguration
 import com.vasberc.data.models.Movie
+import com.vasberc.data.models.asImagesConfiguration
 import com.vasberc.data.models.asMovie
+import com.vasberc.data.utils.ResultState
+import com.vasberc.data.utils.parseResponse
 import com.vasberc.data_local.daos.MovieRemoteKeysDao
 import com.vasberc.data_local.daos.MoviesDao
 import com.vasberc.data_local.entities.MovieRemoteKeysEntity
@@ -22,7 +27,7 @@ import timber.log.Timber
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteKeysDao: MovieRemoteKeysDao, private val service: MoviesService): RemoteMediator<Int, Movie>() {
 
-    private val mutex = Mutex()
+    private var imagesConfiguration: ImagesConfiguration? = null
 
     override suspend fun load(
         loadType: LoadType,
@@ -39,6 +44,9 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
                     moviesDao.clearAllEntities()
                     //Reset the auto increment in every refresh because the table is empty
                     moviesDao.resetMoviesAutoIncrement()
+                    if(imagesConfiguration == null) {
+                        getImagesConfiguration()
+                    }
                     1
                 }
                 LoadType.PREPEND -> {
@@ -57,29 +65,58 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
                 }
             }
 
-            val result = try {
-                val response = service.getPopularMovies("en-US", page)
-                if(response.isSuccessful) {
-                    handleSuccessfulResponse(response, page)
-                } else {
-                    handleServerErrorResponse(response, page)
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "MoviesRemoteMediator error page=$page")
-                //We could not connect with the api at all, we need to show the cashed movies if
-                //the load was for the first page
-                if(page == 1) {
-                    handleConnectionErrorOnFirstPageLoad(page, e)
+           val result = try {
+               handleSuccessFulResponse(page)
+           } catch (e: Exception) {
+               Timber.w(e, "MoviesRemoteMediator error page=$page")
+               //We could not connect with the api at all, we need to show the cashed movies if
+               //the load was for the first page
+               if(page == 1) {
+                   handleConnectionErrorOnFirstPageLoad(page, e)
 
-                } else {
-                    MediatorResult.Error(e)
-                }
-            }
-
+               } else {
+                   MediatorResult.Error(e)
+               }
+           }
+           Timber.d("MoviesRemoteMediator loadType=$loadType page=$page result=$result")
             return@withContext withContext(Dispatchers.Main.immediate) {
                 result
             }
         }
+    }
+
+    private suspend fun getImagesConfiguration() {
+        val imagesConfigurationResponse = service.getConfiguration().parseResponse(
+            successMapper = { it.asImagesConfiguration() },
+            serverErrorMapper = {
+                errorResponseModel, errorCode -> ErrorModel.ServerError(
+                    errorResponseModel.statusCode ?: -1,
+                    errorResponseModel.statusMessage ?: "",
+                    errorCode
+                )
+            }
+        )
+        if(imagesConfigurationResponse is ResultState.Success) {
+            imagesConfiguration = imagesConfigurationResponse.data
+        }
+    }
+
+    private suspend fun handleSuccessFulResponse(page: Int): MediatorResult {
+        val response = service.getPopularMovies("en-US", page)
+        //When the response is successful we save the results in the data to trigger the paging
+        //source and refresh the ui
+        val totalPages = response.totalPages
+        val movies = response.results?.asSequence()?.mapNotNull {
+            it?.asMovie(
+                imageBaseUrl = imagesConfiguration?.secureBaseUrl ?: "",
+                imageSize = imagesConfiguration?.backdropSizes?.get(0) ?: ""
+            )
+        }?.toList()
+            ?: listOf()
+        val endOfPagination = page == totalPages || movies.isEmpty()
+        saveResults(movies, endOfPagination, page)
+        Timber.d("MoviesRemoteMediator success page=$page, pageSize=${movies.size}, endOfPagination=$endOfPagination")
+        return MediatorResult.Success(endOfPaginationReached = endOfPagination)
     }
 
     private suspend inline fun handleConnectionErrorOnFirstPageLoad(
@@ -100,32 +137,6 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
             //If there are not cached movies return error
             MediatorResult.Error(e)
         }
-    }
-
-    private fun handleServerErrorResponse(
-        response: Response<GetPopularMoviesResponse>,
-        page: Int
-    ): MediatorResult.Error {
-        //This is an error response from the server, we do not save anything, the paging
-        //adapter will handle this
-        val exception = Exception(response.errorBody()?.toString())
-        Timber.w(exception, "MoviesRemoteMediator error page=$page")
-        return MediatorResult.Error(exception)
-    }
-
-    private suspend inline fun handleSuccessfulResponse(
-        response: Response<GetPopularMoviesResponse>,
-        page: Int
-    ): MediatorResult.Success {
-        //When the response is successful we save the results in the data to trigger the paging
-        //source and refresh the ui
-        val totalPages = response.body()?.totalPages
-        val movies = response.body()?.results?.asSequence()?.mapNotNull { it?.asMovie() }?.toList()
-            ?: listOf()
-        val endOfPagination = page == totalPages || movies.isEmpty()
-        saveResults(movies, endOfPagination, page)
-        Timber.d("MoviesRemoteMediator success page=$page, pageSize=${movies.size}, endOfPagination=$endOfPagination")
-        return MediatorResult.Success(endOfPaginationReached = endOfPagination)
     }
 
     private suspend fun saveResults(

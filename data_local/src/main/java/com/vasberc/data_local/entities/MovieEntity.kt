@@ -27,11 +27,15 @@ data class MovieEntity(
 @Entity(tableName = "cached_movies")
 data class CachedMovieEntity(
     val backdropPath: String?,
-    @PrimaryKey
     val id: Int,
     val releaseDate: String?,
     val title: String?,
-    val voteAverage: Double?
+    val voteAverage: Double?,
+    //Because the room is reordering the elements in the db based on the primary key,
+    //we use an auto increment primary key to keep the elements in the ui is the same position,
+    //in every load
+    @PrimaryKey(autoGenerate = true)
+    val dbPrimaryKey: Int? = null
 )
 
 data class MovieAndFavoriteEntity(

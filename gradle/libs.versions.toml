@@ -21,6 +21,7 @@ room = "2.6.1"
 paging = "3.2.1"
 timber = "5.0.1"
 coil = "2.6.0"
+netWorkResponseAdapter = "5.0.0"
 
 [libraries]
 #gradle
@@ -46,6 +47,7 @@ coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 #data-remote
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofitConverter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+netWorkResponseAdapter = { group = "com.github.haroldadmin", name = "NetworkResponseAdapter", version.ref = "netWorkResponseAdapter" }
 #data-local
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
@@ -63,8 +65,8 @@ presentation = [
     "androidx-swiperefreshlayout", "shimmer", "androidx-navigation-fragment", "navigation-ui-ktx",
     "androidx-fragment", "paging", "coil"
 ]
-data = ["paging", "retrofit"]
-dataRemote = ["retrofit", "retrofitConverter"]
+data = ["paging", "retrofit", "netWorkResponseAdapter"]
+dataRemote = ["retrofit", "retrofitConverter", "netWorkResponseAdapter"]
 dataLocal = ["roomRuntime", "roomPaging", "roomKtx"]
 testing = ["junit"]
 androidTesting = ["androidx-junit", "androidx-espresso-core"]

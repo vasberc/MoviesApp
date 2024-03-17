@@ -8,21 +8,21 @@ import com.vasberc.data_local.daos.MovieRemoteKeysDao
 import com.vasberc.data_local.daos.MoviesDao
 import com.vasberc.data_remote.service.MoviesService
 import org.koin.core.annotation.ComponentScan
-import org.koin.core.annotation.Factory
 import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
 
 @Module
 @ComponentScan("com.vasberc.data")
 class DataModule
 
-@Factory
+@Single
 fun provideMoviePagingSource(moviesDao: MoviesDao): () -> PagingSource<Int, Movie> {
     return moviesDao.getMovies().map {
         it.asMovie()
     }.asPagingSourceFactory()
 }
 
-@Factory
+@Single
 fun provideMoviesRemoteMediator(moviesDao: MoviesDao, movieRemoteKeysDao: MovieRemoteKeysDao, service: MoviesService): MoviesRemoteMediator {
     return MoviesRemoteMediator(moviesDao, movieRemoteKeysDao, service)
 }

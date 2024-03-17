@@ -35,6 +35,7 @@ interface MoviesDao {
         //We want to cache only the first page, so always we empty the table
         //to contain only 1 page results
         clearAllCachedMovies()
+        resetCachedMoviesAutoIncrement()
         insertAllCachedMovies(movies.map { it.asCachedMovie() })
     }
 
@@ -46,4 +47,7 @@ interface MoviesDao {
 
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = \'movies\'")
     suspend fun resetMoviesAutoIncrement()
+
+    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = \'cached_movies\'")
+    suspend fun resetCachedMoviesAutoIncrement()
 }

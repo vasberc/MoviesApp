@@ -1,6 +1,8 @@
 package com.vasberc.data_remote.service
 
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.vasberc.data_remote.response_model.ConfigurationResponse
+import com.vasberc.data_remote.response_model.ErrorResponseModel
 import com.vasberc.data_remote.response_model.GetMovieResponse
 import com.vasberc.data_remote.response_model.GetMoviesReviewsResponse
 import com.vasberc.data_remote.response_model.GetPopularMoviesResponse
@@ -18,7 +20,7 @@ interface MoviesService {
         language: String,
         @Query("page")
         page: Int
-    ): Response<GetPopularMoviesResponse>
+    ): GetPopularMoviesResponse
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
@@ -28,7 +30,7 @@ interface MoviesService {
         movieId: Int,
         @Query("append_to_response")
         appendToResponse: String = "credits"
-    ): Response<GetMovieResponse>
+    ): NetworkResponse<GetMovieResponse, ErrorResponseModel>
 
     @GET("movie/{movie_id}/reviews")
     suspend fun getMoviesReview(
@@ -38,7 +40,7 @@ interface MoviesService {
         movieId: Int,
         @Query("page")
         page: Int
-    ): Response<GetMoviesReviewsResponse>
+    ): NetworkResponse<GetMoviesReviewsResponse, ErrorResponseModel>
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovies(
@@ -48,9 +50,9 @@ interface MoviesService {
         movieId: Int,
         @Query("page")
         page: Int
-    ): Response<GetSimilarMoviesResponse>
+    ): NetworkResponse<GetSimilarMoviesResponse, ErrorResponseModel>
 
     @GET("configuration")
-    suspend fun getConfiguration(): Response<ConfigurationResponse>
+    suspend fun getConfiguration(): NetworkResponse<ConfigurationResponse, ErrorResponseModel>
 
 }
