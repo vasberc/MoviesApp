@@ -51,7 +51,6 @@ netWorkResponseAdapter = { group = "com.github.haroldadmin", name = "NetworkResp
 #data-local
 roomRuntime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 roomKtx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
-roomPaging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 roomKsp = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 #testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -65,9 +64,9 @@ presentation = [
     "androidx-swiperefreshlayout", "shimmer", "androidx-navigation-fragment", "navigation-ui-ktx",
     "androidx-fragment", "paging", "coil"
 ]
-data = ["paging", "retrofit", "netWorkResponseAdapter"]
+data = ["paging", "retrofit", "netWorkResponseAdapter", "roomKtx"]
 dataRemote = ["retrofit", "retrofitConverter", "netWorkResponseAdapter"]
-dataLocal = ["roomRuntime", "roomPaging", "roomKtx"]
+dataLocal = ["roomRuntime", "roomKtx"]
 testing = ["junit"]
 androidTesting = ["androidx-junit", "androidx-espresso-core"]
 

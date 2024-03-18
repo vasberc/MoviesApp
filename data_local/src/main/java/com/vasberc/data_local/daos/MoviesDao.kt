@@ -1,6 +1,5 @@
 package com.vasberc.data_local.daos
 
-import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,10 +15,6 @@ interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavourite(favouriteEntity: FavouriteEntity)
-
-    @Transaction
-    @Query("SELECT * FROM movies")
-    fun getMovies(): DataSource.Factory<Int, MovieAndFavoriteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllMovies(movies: List<MovieEntity>)
@@ -50,4 +45,8 @@ interface MoviesDao {
 
     @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = \'cached_movies\'")
     suspend fun resetCachedMoviesAutoIncrement()
+
+    @Transaction
+    @Query("SELECT * FROM movies LIMIT :limit OFFSET :offset")
+    suspend fun getMoviesByPage(limit: Int, offset: Int): List<MovieAndFavoriteEntity>
 }

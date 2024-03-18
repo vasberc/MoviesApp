@@ -1,11 +1,10 @@
 package com.vasberc.data.di
 
-import androidx.paging.PagingSource
-import com.vasberc.data.models.Movie
-import com.vasberc.data.models.asMovie
+import com.vasberc.data.paging.MoviesPagingSource
 import com.vasberc.data.paging.MoviesRemoteMediator
 import com.vasberc.data_local.daos.MovieRemoteKeysDao
 import com.vasberc.data_local.daos.MoviesDao
+import com.vasberc.data_local.db.MovieFlixDataBase
 import com.vasberc.data_remote.service.MoviesService
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
@@ -16,10 +15,10 @@ import org.koin.core.annotation.Single
 class DataModule
 
 @Single
-fun provideMoviePagingSource(moviesDao: MoviesDao): () -> PagingSource<Int, Movie> {
-    return moviesDao.getMovies().map {
-        it.asMovie()
-    }.asPagingSourceFactory()
+fun provideMoviePagingSource(dataBase: MovieFlixDataBase, mediator: MoviesRemoteMediator): () -> MoviesPagingSource {
+    return {
+        MoviesPagingSource(dataBase, mediator.remoteDataTotalItems)
+    }
 }
 
 @Single

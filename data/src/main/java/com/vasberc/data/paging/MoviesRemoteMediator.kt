@@ -14,20 +14,18 @@ import com.vasberc.data.utils.parseResponse
 import com.vasberc.data_local.daos.MovieRemoteKeysDao
 import com.vasberc.data_local.daos.MoviesDao
 import com.vasberc.data_local.entities.MovieRemoteKeysEntity
-import com.vasberc.data_remote.response_model.GetPopularMoviesResponse
 import com.vasberc.data_remote.service.MoviesService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import timber.log.Timber
 
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteKeysDao: MovieRemoteKeysDao, private val service: MoviesService): RemoteMediator<Int, Movie>() {
 
     private var imagesConfiguration: ImagesConfiguration? = null
+    var remoteDataTotalItems: Int? = null
 
     override suspend fun load(
         loadType: LoadType,
@@ -37,6 +35,8 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
            Timber.d("MoviesRemoteMediator new loadState=$loadType")
             val page = when (loadType) {
                 LoadType.REFRESH -> {
+                    //Set to null, so the paging source will know that the state is loading
+                    remoteDataTotalItems = null
                     //There refresh is our implementation can be triggered only in the top
                     //element when the user makes pull to refresh, so we have to clear the data
                     //because we will get from network all the data again
@@ -114,6 +114,9 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         }?.toList()
             ?: listOf()
         val endOfPagination = page == totalPages || movies.isEmpty()
+        if(page == 1) {
+            remoteDataTotalItems = response.totalResults
+        }
         saveResults(movies, endOfPagination, page)
         Timber.d("MoviesRemoteMediator success page=$page, pageSize=${movies.size}, endOfPagination=$endOfPagination")
         return MediatorResult.Success(endOfPaginationReached = endOfPagination)
@@ -127,9 +130,10 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         //always the shimmer loading, so the user will understand that there is a loading issue and
         //they will try to pull to refresh the view
         val cachedEntities = (moviesDao.getCachedMovies()
-            .asSequence().map { it.asMovie() } + Movie.provideLoadingItem()).toList()
+            .asSequence().map { it.asMovie() } + Movie.provideLoadingItem(id = -1)).toList()
 
         return if (cachedEntities.size > 1) {
+            remoteDataTotalItems = cachedEntities.size + 1
             //Not giving end of pagination, so the user will be able to scroll down and get the next page
             saveResults(cachedEntities, true, page)
             MediatorResult.Success(endOfPaginationReached = true)

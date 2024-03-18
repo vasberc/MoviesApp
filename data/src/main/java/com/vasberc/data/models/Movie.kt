@@ -15,11 +15,11 @@ data class Movie(
     val isFavourite: Boolean
 ) {
     companion object {
-        const val LOADING_ITEM_ID = -1000
+        const val LOADING_ITEM_BACK_DROP_PATH = "loading item back drop path 242424"
 
-        fun provideLoadingItem() = Movie(
-            "",
-            LOADING_ITEM_ID,
+        fun provideLoadingItem(id: Int) = Movie(
+            LOADING_ITEM_BACK_DROP_PATH,
+            id,
             "",
             "",
             0.0,
