@@ -4,4 +4,13 @@
     <string name="press_to_change_favourite_state">Press to change favourite state</string>
     <string name="press_to_scroll_to_top">Press to scroll to top</string>
     <string name="retry">retry</string>
+    <string name="press_to_share_the_link_of_the_movie">Press to share the link of the movie</string>
+    <string name="runtime">Runtime</string>
+    <string name="description">Description</string>
+    <string name="cast">Cast</string>
+    <string name="reviews">Reviews</string>
+    <string name="similar_movies">Similar movies</string>
+    <string name="reviewer_avatar">Reviewer avatar</string>
+    <string name="read_more">read more</string>
+    <string name="press_to_open_similar_movie_detail_view">Press to open similar movie detail view</string>
 </resources>

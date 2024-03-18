@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="popular_list_item_horizontal_margin">15dp</dimen>
+    <dimen name="horizontal_margin">15dp</dimen>
+    <dimen name="regular_top_margin">15dp</dimen>
 </resources>

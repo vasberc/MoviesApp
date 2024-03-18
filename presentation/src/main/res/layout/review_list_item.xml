@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/radius_bg_border"
+    android:paddingVertical="10dp"
+    android:layout_marginStart="@dimen/horizontal_margin"
+    android:paddingHorizontal="@dimen/horizontal_margin">
+
+    <ImageView
+        android:id="@+id/iv_reviewer_avatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:contentDescription="@string/reviewer_avatar"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/baseline_tag_faces_24" />
+
+    <TextView
+        android:id="@+id/tv_author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/iv_reviewer_avatar"
+        app:layout_constraintStart_toEndOf="@id/iv_reviewer_avatar"
+        app:layout_constraintTop_toTopOf="@id/iv_reviewer_avatar"
+        tools:text="Author name" />
+
+    <TextView
+        android:id="@+id/tv_date_updated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/regular_top_margin"
+        android:textColor="@android:color/tertiary_text_light"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_reviewer_avatar"
+        tools:text="2023-10-10" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxWidth="300dp"
+        android:maxLines="3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_updated"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nulla ante, accumsan vitae odio vel, vehicula placerat enim. Aliquam erat volutpat. Nam lacinia risus sed sapien bibendum bibendum. Nulla imperdiet viverra magna a ultrices. Duis consectetur massa tortor. Ut quis felis dui. Maecenas sagittis enim pulvinar libero convallis, eget facilisis quam blandit. Duis accumsan tortor leo, ac lacinia justo sagittis non. In dapibus posuere nunc vitae convallis. Fusce lorem metus, condimentum eleifend facilisis eu, congue ac lorem. Etiam sit amet nulla condimentum lectus rutrum sodales nec in dui. Donec tincidunt, dui ut eleifend gravida, tellus neque gravida erat, nec pretium elit diam ac libero. Sed in auctor purus, quis volutpat massa. Integer maximus neque neque, nec ullamcorper metus feugiat vel. Quisque eget dolor sem. Sed pellentesque quam nibh, ac aliquam sapien interdum vitae. Quisque sit amet mauris turpis. Ut vehicula metus et pretium elementum. In malesuada justo enim, ut hendrerit felis elementum vestibulum. Suspendisse accumsan ex et tempor maximus. Proin efficitur nisi sed tincidunt venenatis. Etiam placerat sollicitudin erat, sit amet posuere justo porta tristique. Quisque luctus consequat massa vitae tristique. Aliquam erat volutpat. Aliquam vitae pretium sapien. Vivamus bibendum suscipit eros sit amet ornare. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec lobortis vitae tortor quis dignissim. Pellentesque hendrerit consectetur dui, ac porta ipsum. Fusce sollicitudin ut velit sit amet egestas. Nulla vel bibendum ipsum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris in metus ac dui ultrices molestie." />
+
+    <TextView
+        android:id="@+id/tv_read_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/read_more"
+        android:textColor="@android:color/holo_blue_dark"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/tv_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_content"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
