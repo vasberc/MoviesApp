@@ -2,12 +2,15 @@ package com.vasberc.presentation.homescreen
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.vasberc.presentation.R
 import com.vasberc.presentation.databinding.HomeScreenFragmentBinding
 import com.vasberc.presentation.utils.BaseFragment
+import com.vasberc.presentation.utils.smoothScrollTargetElement
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,6 +26,14 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
         }
     }
 
+    private val layoutManager: LinearLayoutManager? get() {
+        return try {
+            binding.rvPopularMovies.layoutManager as LinearLayoutManager
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     override fun createViewBinding(view: View): HomeScreenFragmentBinding {
         return HomeScreenFragmentBinding.bind(view)
     }
@@ -32,6 +43,24 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
         setUpRecyclerView()
         setUpFlowCollectors()
         setUpPullToRefresh()
+        setUpListeners()
+    }
+
+    private fun setUpListeners() {
+        binding.rvPopularMovies.setOnScrollChangeListener { _, _, _, _, _ ->
+            if(layoutManager != null) {
+                val firstVisibleItem = layoutManager!!.findFirstVisibleItemPosition()
+                if(firstVisibleItem > 0 &&  !binding.fabScrollToTop.isVisible) {
+                    binding.fabScrollToTop.isVisible = true
+                } else if(firstVisibleItem == 0 && binding.fabScrollToTop.isVisible) {
+                    binding.fabScrollToTop.isVisible = false
+                }
+            }
+
+            binding.fabScrollToTop.setOnClickListener {
+                binding.rvPopularMovies.smoothScrollTargetElement(0)
+            }
+        }
     }
 
     private fun setUpPullToRefresh() {
@@ -44,6 +73,8 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
         if(adapter == null) {
             binding.rvPopularMovies.adapter = PopularMoviesPagingAdapter()
             binding.rvPopularMovies.layoutManager = LinearLayoutManager(context)
+            //disable items flashing when the adapter is reDrawing the viewHolder's view
+            (binding.rvPopularMovies.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         }
     }
 

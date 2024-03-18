@@ -14,18 +14,7 @@ data class Movie(
     val voteAverage: Double,
     val isFavourite: Boolean
 ) {
-    companion object {
-        const val LOADING_ITEM_BACK_DROP_PATH = "loading item back drop path 242424"
 
-        fun provideLoadingItem(id: Int) = Movie(
-            LOADING_ITEM_BACK_DROP_PATH,
-            id,
-            "",
-            "",
-            0.0,
-            false
-        )
-    }
     fun asEntity(): MovieEntity {
         return MovieEntity(
             backdropPath = backdropPath,

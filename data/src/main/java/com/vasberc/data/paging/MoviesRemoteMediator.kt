@@ -126,15 +126,15 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         page: Int,
         e: Exception
     ): MediatorResult {
-        //Getting the cached movies and adding at the end an item that the adapter will display
-        //always the shimmer loading, so the user will understand that there is a loading issue and
-        //they will try to pull to refresh the view
-        val cachedEntities = (moviesDao.getCachedMovies()
-            .asSequence().map { it.asMovie() } + Movie.provideLoadingItem(id = -1)).toList()
+
+        val cachedEntities = moviesDao.getCachedMovies().map { it.asMovie() }
 
         return if (cachedEntities.size > 1) {
+            //Adding one to the total item, so the paging source will make the adapter to show a loading placeholder
+            //this way the user will understand that there is a loading issue and will try to make a pull to refresh
+            //to fix it
             remoteDataTotalItems = cachedEntities.size + 1
-            //Not giving end of pagination, so the user will be able to scroll down and get the next page
+
             saveResults(cachedEntities, true, page)
             MediatorResult.Success(endOfPaginationReached = true)
         } else {

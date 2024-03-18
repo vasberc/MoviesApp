@@ -39,10 +39,10 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
 
     inner class PopularMoviesViewHolder(private val binding: PopularMovieItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Movie?) {
-            binding.sflLoading.isVisible = item == null || item.backdropPath == Movie.LOADING_ITEM_BACK_DROP_PATH
+            binding.sflLoading.isVisible = item == null
             binding.clItem.isVisible =  !binding.sflLoading.isVisible
 
-            if(binding.clItem.isVisible && item != null) {
+            if(item != null) {
                 binding.ivMovieImage.load(item.backdropPath)
                 binding.tvMovieTitle.text = item.title
                 binding.rbMovieAverageRating.rating = item.voteAverage.toFloat() / 2
