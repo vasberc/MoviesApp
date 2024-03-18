@@ -11,6 +11,9 @@ import coil.load
 import com.vasberc.data.models.Movie
 import com.vasberc.presentation.R
 import com.vasberc.presentation.databinding.PopularMovieItemBinding
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAdapter.PopularMoviesViewHolder>(
     object : DiffUtil.ItemCallback<Movie>() {
@@ -24,6 +27,9 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
 
     }
 ) {
+    private val favouriteClicksChannel = Channel<Movie>(Channel.RENDEZVOUS)
+    val favouriteClicks: Flow<Movie> = favouriteClicksChannel.receiveAsFlow()
+
     override fun onBindViewHolder(holder: PopularMoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -46,13 +52,15 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
                 binding.ivMovieImage.load(item.backdropPath)
                 binding.tvMovieTitle.text = item.title
                 binding.rbMovieAverageRating.rating = item.voteAverage.toFloat() / 2
-                binding.ivMovieFavouriteState.load(
-                    ContextCompat.getDrawable(
-                        binding.root.context,
-                        if(item.isFavourite) R.drawable.baseline_favorite_24 else R.drawable.outline_favorite_border_24
-                    )
+                binding.ivMovieFavouriteState.setImageResource(
+                    if(item.isFavourite) R.drawable.baseline_favorite_24 else R.drawable.outline_favorite_border_24
                 )
                 binding.tvMovieReleaseDate.text = item.releaseDate
+                binding.ivMovieFavouriteState.setOnClickListener {
+                    favouriteClicksChannel.trySend(item)
+                }
+            } else {
+                binding.ivMovieFavouriteState.setOnClickListener {}
             }
         }
     }

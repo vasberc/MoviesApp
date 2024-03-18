@@ -49,4 +49,22 @@ interface MoviesDao {
     @Transaction
     @Query("SELECT * FROM movies LIMIT :limit OFFSET :offset")
     suspend fun getMoviesByPage(limit: Int, offset: Int): List<MovieAndFavoriteEntity>
+
+    @Transaction
+    suspend fun toggleFavorite(movieId: Int) {
+        val isCurrentlyFavorite = countFavoritesById(movieId) >= 1
+        if(isCurrentlyFavorite) {
+            deleteFavoriteById(movieId)
+        } else {
+            insertFavourite(
+                FavouriteEntity(movieId)
+            )
+        }
+    }
+
+    @Query("SELECT COUNT(*) FROM favourites WHERE movieId = :movieId")
+    suspend fun countFavoritesById(movieId: Int): Int
+
+    @Query("DELETE FROM favourites WHERE movieId = :movieId")
+    suspend fun deleteFavoriteById(movieId: Int)
 }

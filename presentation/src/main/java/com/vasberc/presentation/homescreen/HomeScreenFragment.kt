@@ -61,6 +61,10 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
                 binding.rvPopularMovies.smoothScrollTargetElement(0)
             }
         }
+
+        adapter?.favouriteClicks?.onEach {
+            viewModel.toggleFavourite(it)
+        }?.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun setUpPullToRefresh() {
