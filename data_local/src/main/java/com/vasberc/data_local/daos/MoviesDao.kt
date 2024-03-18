@@ -16,7 +16,7 @@ interface MoviesDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFavourite(favouriteEntity: FavouriteEntity)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllMovies(movies: List<MovieEntity>)
 
     @Query("DELETE FROM movies")
@@ -30,7 +30,6 @@ interface MoviesDao {
         //We want to cache only the first page, so always we empty the table
         //to contain only 1 page results
         clearAllCachedMovies()
-        resetCachedMoviesAutoIncrement()
         insertAllCachedMovies(movies.map { it.asCachedMovie() })
     }
 
@@ -39,12 +38,6 @@ interface MoviesDao {
 
     @Query("DELETE FROM cached_movies")
     suspend fun clearAllCachedMovies()
-
-    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = \'movies\'")
-    suspend fun resetMoviesAutoIncrement()
-
-    @Query("UPDATE sqlite_sequence SET seq = 0 WHERE name = \'cached_movies\'")
-    suspend fun resetCachedMoviesAutoIncrement()
 
     @Transaction
     @Query("SELECT * FROM movies LIMIT :limit OFFSET :offset")

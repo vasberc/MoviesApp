@@ -44,10 +44,12 @@ class MoviesPagingSource(private val db: MovieFlixDataBase, private val remoteDa
                 val offset = (page - 1) * limit
                 val movies = db.moviesDao().getMoviesByPage(limit, offset).map { it.asMovie() }
                 val itemsBefore = params.loadSize * (page -1)
-                //Setting items after to 100 if the total items is null, because
+                //Setting items after to 20 if the total items is null, because
                 //null means that is the initial load of the list, and we will insert 100 loading place holders
-                //tha they will display the shimmer loading item
-                val itemsAfter = (remoteDataTotalItems ?: 100) - itemsBefore - movies.size
+                //tha they will display the shimmer loading item.
+                //Also setting maximum value of items after to 20(page size), in case of loading error, user cannot scroll
+                //to the next page
+                val itemsAfter = ((remoteDataTotalItems ?: 20) - itemsBefore - movies.size).coerceAtMost(20)
                 Quadruple(movies, page, itemsBefore, itemsAfter)
             }
             Timber.d("results $movies")

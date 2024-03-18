@@ -15,28 +15,17 @@ data class Movie(
     val isFavourite: Boolean
 ) {
 
-    fun asEntity(): MovieEntity {
+    fun asEntity(position: Int): MovieEntity {
         return MovieEntity(
             backdropPath = backdropPath,
             id = id,
             releaseDate = releaseDate,
             title = title,
-            voteAverage = voteAverage
+            voteAverage = voteAverage,
+            position = position
         )
     }
 
-    fun asMovieAndFavoriteEntity(): MovieAndFavoriteEntity {
-        return MovieAndFavoriteEntity(
-            movieEntity = MovieEntity(
-                backdropPath = backdropPath,
-                id = id,
-                releaseDate = releaseDate,
-                title = title,
-                voteAverage = voteAverage
-            ),
-            favouriteEntity = if(isFavourite) FavouriteEntity(id) else null
-        )
-    }
 }
 
 fun MovieAndFavoriteEntity.asMovie(): Movie {

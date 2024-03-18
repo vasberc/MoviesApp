@@ -11,13 +11,17 @@ import com.vasberc.presentation.R
 import com.vasberc.presentation.databinding.HomeScreenFragmentBinding
 import com.vasberc.presentation.utils.BaseFragment
 import com.vasberc.presentation.utils.smoothScrollTargetElement
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_screen_fragment) {
 
     private val viewModel: HomeScreenViewModel by viewModel()
+    private var retryJob: Job? = null
     private val adapter: PopularMoviesPagingAdapter? get() {
         return try {
             binding.rvPopularMovies.adapter as PopularMoviesPagingAdapter
@@ -98,6 +102,19 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
                 //Refresh loading state, data is not presented to the ui
                 //hide the small spinner of the pull to refresh component
                 binding.root.isRefreshing = false
+            } else if(mediatorStates?.append is LoadState.Error) {
+                retryJob?.cancel()
+                //In case a page could not be loaded due to error, try for 5 times after 10 seconds
+                // to get the failed page
+                retryJob = viewLifecycleOwner.lifecycleScope.launch {
+                    for(i in 0..5) {
+                        delay(10000)
+                        adapter?.retry()
+                    }
+                }
+            } else {
+                retryJob?.cancel()
+                retryJob = null
             }
         }?.launchIn(viewLifecycleOwner.lifecycleScope)
     }

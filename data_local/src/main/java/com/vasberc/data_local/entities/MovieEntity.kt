@@ -14,13 +14,13 @@ data class MovieEntity(
     val title: String?,
     val voteAverage: Double?,
     //Because the room is reordering the elements in the db based on the primary key,
-    //we use an auto increment primary key to keep the elements in the ui is the same position,
+    //we use the position field to keep the elements in the ui is the same position,
     //in every load
-    @PrimaryKey(autoGenerate = true)
-    val dbPrimaryKey: Int? = null
+    @PrimaryKey
+    val position: Int
 ) {
      fun asCachedMovie(): CachedMovieEntity {
-         return CachedMovieEntity(backdropPath, id, releaseDate, title, voteAverage)
+         return CachedMovieEntity(backdropPath, id, releaseDate, title, voteAverage, position)
      }
 }
 
@@ -32,10 +32,10 @@ data class CachedMovieEntity(
     val title: String?,
     val voteAverage: Double?,
     //Because the room is reordering the elements in the db based on the primary key,
-    //we use an auto increment primary key to keep the elements in the ui is the same position,
+    //we use the position field to keep the elements in the ui is the same position,
     //in every load
-    @PrimaryKey(autoGenerate = true)
-    val dbPrimaryKey: Int? = null
+    @PrimaryKey
+    val position: Int
 )
 
 data class MovieAndFavoriteEntity(

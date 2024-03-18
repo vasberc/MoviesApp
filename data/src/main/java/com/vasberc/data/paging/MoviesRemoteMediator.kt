@@ -42,8 +42,6 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
                     //because we will get from network all the data again
                     remoteKeysDao.clearRemoteKeys()
                     moviesDao.clearAllEntities()
-                    //Reset the auto increment in every refresh because the table is empty
-                    moviesDao.resetMoviesAutoIncrement()
                     if(imagesConfiguration == null) {
                         getImagesConfiguration()
                     }
@@ -114,9 +112,7 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         }?.toList()
             ?: listOf()
         val endOfPagination = page == totalPages || movies.isEmpty()
-        if(page == 1) {
-            remoteDataTotalItems = response.totalResults
-        }
+        remoteDataTotalItems = response.totalResults
         saveResults(movies, endOfPagination, page)
         Timber.d("MoviesRemoteMediator success page=$page, pageSize=${movies.size}, endOfPagination=$endOfPagination")
         return MediatorResult.Success(endOfPaginationReached = endOfPagination)
@@ -151,7 +147,11 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         val prevPage = (page - 1).takeUnless { it <= 0 }
         val nextPage = (page + 1).takeUnless { endOfPagination }
         val remoteKeys = movies.map { MovieRemoteKeysEntity(it.id, prevPage, nextPage) }
-        val movieEntities = movies.map { it.asEntity() }
+        val movieEntities = movies.mapIndexed { index, movie ->
+            movie.asEntity(
+                position = 20 * (page - 1) + index
+            )
+        }
         remoteKeysDao.insertAll(remoteKeys)
         moviesDao.insertAllMovies(movieEntities)
         //Every time we load the 1st page, we cache the response
