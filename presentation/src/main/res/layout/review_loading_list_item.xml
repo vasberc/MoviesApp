@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sfl_review_loading"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_reviewer_avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/shimmerColor"
+            android:contentDescription="@string/loading_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/shimmerColor"
+            android:minWidth="100dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_reviewer_avatar"
+            app:layout_constraintStart_toEndOf="@id/iv_reviewer_avatar"
+            app:layout_constraintTop_toTopOf="@id/iv_reviewer_avatar" />
+
+        <TextView
+            android:id="@+id/tv_date_updated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/regular_top_margin"
+            android:background="@color/shimmerColor"
+            android:minWidth="60dp"
+            android:textColor="@android:color/tertiary_text_light"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_reviewer_avatar" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/shimmerColor"
+            android:ellipsize="end"
+            android:lines="3"
+            android:minWidth="300dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_updated" />
+
+        <TextView
+            android:id="@+id/tv_read_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/shimmerColor"
+            android:minWidth="50dp"
+            android:textColor="@android:color/holo_blue_dark"
+            app:layout_constraintEnd_toEndOf="@+id/tv_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

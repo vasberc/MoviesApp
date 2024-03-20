@@ -4,10 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/radius_bg_border"
-    android:paddingVertical="10dp"
     android:layout_marginStart="@dimen/horizontal_margin"
-    android:paddingHorizontal="@dimen/horizontal_margin">
+    android:background="@drawable/radius_bg_border"
+    android:paddingHorizontal="@dimen/horizontal_margin"
+    android:paddingVertical="10dp">
+
+    <include
+        android:id="@+id/included_loaded_layout"
+        layout="@layout/review_loading_list_item"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_reviewer_avatar"

@@ -49,6 +49,7 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
             binding.clItem.isVisible =  !binding.sflLoading.isVisible
 
             if(item != null) {
+                binding.sflLoading.stopShimmer()
                 binding.ivMovieImage.load(item.backdropPath)
                 binding.tvMovieTitle.text = item.title
                 binding.rbMovieAverageRating.rating = item.voteAverage.toFloat() / 2
@@ -60,6 +61,7 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
                     favouriteClicksChannel.trySend(item)
                 }
             } else {
+                binding.sflLoading.startShimmer()
                 binding.ivMovieFavouriteState.setOnClickListener {}
             }
         }
