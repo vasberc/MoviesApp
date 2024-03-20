@@ -35,6 +35,22 @@
         app:layout_constraintTop_toTopOf="@id/iv_reviewer_avatar"
         tools:text="Author name" />
 
+    <RatingBar
+        android:id="@+id/rb_movie_rating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/regular_top_margin"
+        android:isIndicator="true"
+        android:progressBackgroundTint="@color/black"
+        android:progressTint="@color/yellow"
+        android:secondaryProgressTint="@android:color/transparent"
+        android:stepSize="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_reviewer_avatar"
+        tools:rating="2.5" />
+
+
     <TextView
         android:id="@+id/tv_date_updated"
         android:layout_width="wrap_content"
@@ -43,7 +59,7 @@
         android:textColor="@android:color/tertiary_text_light"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_reviewer_avatar"
+        app:layout_constraintTop_toBottomOf="@id/rb_movie_rating"
         tools:text="2023-10-10" />
 
     <TextView

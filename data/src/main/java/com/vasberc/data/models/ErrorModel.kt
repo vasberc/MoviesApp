@@ -1,5 +1,7 @@
 package com.vasberc.data.models
 
+import com.vasberc.data_remote.response_model.ErrorResponseModel
+
 sealed class ErrorModel {
 
     //Connectivity errors
@@ -17,4 +19,12 @@ sealed class ErrorModel {
     ) : ErrorModel()
 
     data class Unknown(val throwableString: String? = null) : ErrorModel()
+}
+
+fun ErrorResponseModel.asErrorModel(status: Int): ErrorModel.ServerError {
+    return ErrorModel.ServerError(
+        type = statusCode ?: -1,
+        message = statusMessage ?: "",
+        status = status
+    )
 }

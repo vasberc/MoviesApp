@@ -1,13 +1,11 @@
 package com.vasberc.data_remote.di
 
-import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.vasberc.data_remote.BuildConfig
 import com.vasberc.data_remote.HeaderInterceptor
 import com.vasberc.data_remote.service.MoviesService
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module

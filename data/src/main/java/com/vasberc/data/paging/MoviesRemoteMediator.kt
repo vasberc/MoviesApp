@@ -4,9 +4,9 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.vasberc.data.models.ErrorModel
-import com.vasberc.data.models.ImagesConfiguration
+import com.vasberc.data.configuration.Configuration
 import com.vasberc.data.models.Movie
+import com.vasberc.data.models.asErrorModel
 import com.vasberc.data.models.asImagesConfiguration
 import com.vasberc.data.models.asMovie
 import com.vasberc.data.utils.ResultState
@@ -24,7 +24,6 @@ import timber.log.Timber
 @OptIn(ExperimentalPagingApi::class)
 class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteKeysDao: MovieRemoteKeysDao, private val service: MoviesService): RemoteMediator<Int, Movie>() {
 
-    private var imagesConfiguration: ImagesConfiguration? = null
     var remoteDataTotalItems: Int? = null
 
     override suspend fun load(
@@ -42,7 +41,7 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
                     //because we will get from network all the data again
                     remoteKeysDao.clearRemoteKeys()
                     moviesDao.clearAllEntities()
-                    if(imagesConfiguration == null) {
+                    if(Configuration.images == null) {
                         getImagesConfiguration()
                     }
                     1
@@ -85,17 +84,13 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
 
     private suspend fun getImagesConfiguration() {
         val imagesConfigurationResponse = service.getConfiguration().parseResponse(
-            successMapper = { it.asImagesConfiguration() },
-            serverErrorMapper = {
-                errorResponseModel, errorCode -> ErrorModel.ServerError(
-                    errorResponseModel.statusCode ?: -1,
-                    errorResponseModel.statusMessage ?: "",
-                    errorCode
-                )
+            successMapper = { asImagesConfiguration() },
+            serverErrorMapper = { errorCode ->
+                asErrorModel(errorCode)
             }
         )
         if(imagesConfigurationResponse is ResultState.Success) {
-            imagesConfiguration = imagesConfigurationResponse.data
+            Configuration.images = imagesConfigurationResponse.data
         }
     }
 
@@ -106,8 +101,8 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         val totalPages = response.totalPages
         val movies = response.results?.asSequence()?.mapNotNull {
             it?.asMovie(
-                imageBaseUrl = imagesConfiguration?.secureBaseUrl ?: "",
-                imageSize = imagesConfiguration?.backdropSizes?.get(0) ?: ""
+                imageBaseUrl = Configuration.images?.secureBaseUrl ?: "",
+                imageSize = Configuration.images?.backdropSizes?.get(0) ?: ""
             )
         }?.toList()
             ?: listOf()

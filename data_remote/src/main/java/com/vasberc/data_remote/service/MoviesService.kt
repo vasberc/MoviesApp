@@ -7,7 +7,6 @@ import com.vasberc.data_remote.response_model.GetMovieResponse
 import com.vasberc.data_remote.response_model.GetMoviesReviewsResponse
 import com.vasberc.data_remote.response_model.GetPopularMoviesResponse
 import com.vasberc.data_remote.response_model.GetSimilarMoviesResponse
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

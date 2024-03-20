@@ -122,7 +122,7 @@
                 android:isIndicator="true"
                 android:progressBackgroundTint="@color/black"
                 android:progressTint="@color/yellow"
-                android:rating="2.5"
+                tools:rating="2.5"
                 android:secondaryProgressTint="@android:color/transparent"
                 android:stepSize="0.1"
                 app:layout_constraintStart_toStartOf="parent"

@@ -9,13 +9,13 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 fun <T : Any, U : Any, R : Any>NetworkResponse<T, U>.parseResponse(
-    successMapper: (T) -> R,
-    serverErrorMapper: (U, Int) -> ErrorModel.ServerError
+    successMapper: T.() -> R,
+    serverErrorMapper: U.(Int) -> ErrorModel.ServerError
 ): ResultState<R> =
 
     when (this) {
-        is NetworkResponse.Success -> ResultState.Success(successMapper(this.body))
-        is NetworkResponse.ServerError -> ResultState.Error(serverErrorMapper(this.body!!, this.code!!))
+        is NetworkResponse.Success -> ResultState.Success(this.body.successMapper())
+        is NetworkResponse.ServerError -> ResultState.Error(this.body!!.serverErrorMapper(this.code!!))
         is NetworkResponse.NetworkError -> ResultState.Error(getError(this.error))
         is NetworkResponse.UnknownError -> ResultState.Error(getError(this.error))
     }
