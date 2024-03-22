@@ -13,15 +13,15 @@ import org.koin.core.annotation.Single
 class MoviesRemoteRepoImpl(private val service: MoviesService):
     MoviesRemoteRepo {
     override suspend fun getMovieById(movieId: Int): NetworkResponse<GetMovieResponse, ErrorResponseModel> {
-        return service.getMovie("en-US", movieId)
+        return service.getMovie(language = "en-US", movieId = movieId)
     }
 
     override suspend fun getReviewsByMovieId(movieId: Int): NetworkResponse<GetMoviesReviewsResponse, ErrorResponseModel> {
-        return service.getMoviesReview("en-US", movieId, 1)
+        return service.getMoviesReview(language = "en-US", movieId = movieId, page = 1)
     }
 
     override suspend fun getSimilarMoviesByMovieId(movieId: Int): NetworkResponse<GetSimilarMoviesResponse, ErrorResponseModel> {
-        return service.getSimilarMovies("en-US", movieId, 1)
+        return service.getSimilarMovies(language = "en-US", movieId = movieId, page = 1)
     }
 
     override suspend fun getConfiguration(): NetworkResponse<ConfigurationResponse, ErrorResponseModel> {

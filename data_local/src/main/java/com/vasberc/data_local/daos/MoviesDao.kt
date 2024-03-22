@@ -60,4 +60,7 @@ interface MoviesDao {
 
     @Query("DELETE FROM favourites WHERE movieId = :movieId")
     suspend fun deleteFavoriteById(movieId: Int)
+
+    @Query("SELECT * FROM favourites WHERE movieId = :movieId LIMIT 1")
+    suspend fun getIsFavouriteById(movieId: Int): FavouriteEntity?
 }

@@ -8,4 +8,8 @@ class MoviesLocalRepoImpl(private val moviesDao: MoviesDao): MoviesLocalRepo {
     override suspend fun toggleFavourite(movieId: Int) {
         moviesDao.toggleFavorite(movieId)
     }
+
+    override suspend fun checkFavouriteById(movieId: Int): Boolean {
+        return moviesDao.getIsFavouriteById(movieId) != null
+    }
 }

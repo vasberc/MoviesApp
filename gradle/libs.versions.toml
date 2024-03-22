@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.0"
+agp = "8.3.1"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -22,10 +22,12 @@ paging = "3.2.1"
 timber = "5.0.1"
 coil = "2.6.0"
 netWorkResponseAdapter = "5.0.0"
+desugaring = "2.0.4"
 
 [libraries]
 #gradle
 gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+androidNavigationSafeArgs = { group = "androidx.navigation", name = "navigation-safe-args-gradle-plugin", version.ref = "navigation" }
 #core
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 koinAndroid = { group = "io.insert-koin", name = "koin-android", version.ref = "koinAndroid" }
@@ -33,6 +35,7 @@ koinAnnotations = { group = "io.insert-koin", name = "koin-annotations", version
 koinKsp = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koinKsp" }
 paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+desugaring = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugaring" }
 #presentation
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }

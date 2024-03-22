@@ -8,5 +8,6 @@ plugins {
 buildscript {
     dependencies {
         classpath(libs.gradlePlugin)
+        classpath(libs.androidNavigationSafeArgs)
     }
 }

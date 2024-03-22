@@ -2,4 +2,5 @@
 <resources>
     <dimen name="horizontal_margin">15dp</dimen>
     <dimen name="regular_top_margin">15dp</dimen>
+    <dimen name="corners_radius">15dp</dimen>
 </resources>

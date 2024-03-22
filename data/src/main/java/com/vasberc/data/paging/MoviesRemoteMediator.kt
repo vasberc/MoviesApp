@@ -102,7 +102,7 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
         val movies = response.results?.asSequence()?.mapNotNull {
             it?.asMovie(
                 imageBaseUrl = Configuration.images?.secureBaseUrl ?: "",
-                imageSize = Configuration.images?.backdropSizes?.get(0) ?: ""
+                imageSize = Configuration.images?.backdropSizes?.get(2) ?: ""
             )
         }?.toList()
             ?: listOf()

@@ -25,6 +25,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
@@ -40,6 +42,7 @@ dependencies {
     ksp(libs.roomKsp)
     implementation(libs.bundles.core)
     implementation(libs.bundles.dataLocal)
+    coreLibraryDesugaring(libs.desugaring)
     testImplementation(libs.bundles.testing)
     androidTestImplementation(libs.bundles.androidTesting)
 }

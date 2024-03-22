@@ -14,4 +14,6 @@
     <string name="read_more">read more</string>
     <string name="press_to_open_similar_movie_detail_view">Press to open similar movie detail view</string>
     <string name="loading_icon">loading icon</string>
+    <string name="press_to_refresh_the_page">Press to refresh the page</string>
+    <string name="press_to_close_the_page">Press to close the page</string>
 </resources>

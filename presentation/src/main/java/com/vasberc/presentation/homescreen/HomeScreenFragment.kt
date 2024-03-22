@@ -2,8 +2,10 @@ package com.vasberc.presentation.homescreen
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -68,6 +70,13 @@ class HomeScreenFragment: BaseFragment<HomeScreenFragmentBinding>(R.layout.home_
 
         adapter?.favouriteClicks?.onEach {
             viewModel.toggleFavourite(it)
+        }?.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        adapter?.rootClicks?.onEach {
+           navigate(HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailedFragment(
+               movieId = it.id,
+               title = it.title
+           ))
         }?.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 

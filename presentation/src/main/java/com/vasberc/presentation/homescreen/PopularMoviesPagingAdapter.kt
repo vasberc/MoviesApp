@@ -6,10 +6,11 @@ import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.vasberc.presentation.utils.loadFromNetWork
 import com.vasberc.data.models.Movie
 import com.vasberc.presentation.R
 import com.vasberc.presentation.databinding.PopularMovieItemBinding
+import com.vasberc.presentation.utils.createShimmerDrawable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -26,8 +27,12 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
 
     }
 ) {
+
     private val favouriteClicksChannel = Channel<Movie>(Channel.RENDEZVOUS)
     val favouriteClicks: Flow<Movie> = favouriteClicksChannel.receiveAsFlow()
+
+    private val rootClicksChannel = Channel<Movie>(Channel.RENDEZVOUS)
+    val rootClicks: Flow<Movie> = rootClicksChannel.receiveAsFlow()
 
     override fun onBindViewHolder(holder: PopularMoviesViewHolder, position: Int) {
         holder.bind(getItem(position))
@@ -49,7 +54,11 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
 
             if(item != null) {
                 binding.sflLoading.stopShimmer()
-                binding.ivMovieImage.load(item.backdropPath)
+                binding.ivMovieImage.loadFromNetWork(
+                    item.backdropPath,
+                    createShimmerDrawable(),
+                    R.drawable.ic_no_image_placeholder
+                )
                 binding.tvMovieTitle.text = item.title
                 binding.rbMovieAverageRating.rating = item.voteAverage.toFloat() / 2
                 binding.ivMovieFavouriteState.setImageResource(
@@ -59,9 +68,13 @@ class PopularMoviesPagingAdapter: PagingDataAdapter<Movie, PopularMoviesPagingAd
                 binding.ivMovieFavouriteState.setOnClickListener {
                     favouriteClicksChannel.trySend(item)
                 }
+                binding.root.setOnClickListener {
+                    rootClicksChannel.trySend(item)
+                }
             } else {
                 binding.sflLoading.startShimmer()
                 binding.ivMovieFavouriteState.setOnClickListener {}
+                binding.root.setOnClickListener {}
             }
         }
     }

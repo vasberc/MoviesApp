@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.vasberc.data.models.Movie
 import com.vasberc.data.repo.MoviesRepo
+import kotlinx.coroutines.launch
 import org.koin.android.annotation.KoinViewModel
 
 @KoinViewModel
@@ -17,6 +18,8 @@ class HomeScreenViewModel(
     val moviesPagerFlow = moviesPager.flow.cachedIn(viewModelScope)
 
     fun toggleFavourite(movie: Movie) {
-        moviesRepo.toggleFavourite(movie)
+        viewModelScope.launch {
+            moviesRepo.toggleFavourite(movie.id)
+        }
     }
 }

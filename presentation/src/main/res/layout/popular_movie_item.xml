@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="15dp"
     android:elevation="0dp"
-    app:cardCornerRadius="15dp">
+    app:cardCornerRadius="@dimen/corners_radius">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/sfl_loading"
@@ -20,7 +20,7 @@
             android:background="@color/black"
             android:paddingBottom="15dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_shimmer_image"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -96,10 +96,10 @@
             android:id="@+id/iv_movie_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/movie_cover_image"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/ic_launcher_background"
-            tools:src="@drawable/ic_launcher_foreground" />
+            tools:src="@drawable/ic_no_image_placeholder" />
 
         <TextView
             android:id="@+id/tv_movie_title"

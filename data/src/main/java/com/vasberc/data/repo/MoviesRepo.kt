@@ -8,7 +8,7 @@ import com.vasberc.data.utils.ResultState
 import kotlinx.coroutines.flow.Flow
 
 interface MoviesRepo {
-    fun toggleFavourite(movie: Movie)
+    suspend fun toggleFavourite(movieId: Int): Boolean
 
     fun getMovieDetailedByMovieId(movieId: Int): Flow<ResultState<MovieDetailed>>
 

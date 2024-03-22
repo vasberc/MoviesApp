@@ -23,30 +23,30 @@ interface MoviesService {
 
     @GET("movie/{movie_id}")
     suspend fun getMovie(
-        @Query("language")
-        language: String,
         @Path("movie_id")
         movieId: Int,
+        @Query("language")
+        language: String,
         @Query("append_to_response")
         appendToResponse: String = "credits"
     ): NetworkResponse<GetMovieResponse, ErrorResponseModel>
 
     @GET("movie/{movie_id}/reviews")
     suspend fun getMoviesReview(
-        @Query("language")
-        language: String,
         @Path("movie_id")
         movieId: Int,
+        @Query("language")
+        language: String,
         @Query("page")
         page: Int
     ): NetworkResponse<GetMoviesReviewsResponse, ErrorResponseModel>
 
     @GET("movie/{movie_id}/similar")
     suspend fun getSimilarMovies(
-        @Query("language")
-        language: String,
         @Path("movie_id")
         movieId: Int,
+        @Query("language")
+        language: String,
         @Query("page")
         page: Int
     ): NetworkResponse<GetSimilarMoviesResponse, ErrorResponseModel>
