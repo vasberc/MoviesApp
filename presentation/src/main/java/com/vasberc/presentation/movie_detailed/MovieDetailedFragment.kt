@@ -3,14 +3,11 @@ package com.vasberc.presentation.movie_detailed
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
-import androidx.recyclerview.widget.RecyclerView.Orientation
 import com.vasberc.data.models.MovieDetailed
 import com.vasberc.presentation.R
 import com.vasberc.presentation.databinding.MovieDetailViewFragmentBinding
@@ -163,7 +160,7 @@ class MovieDetailedFragment: BaseFragment<MovieDetailViewFragmentBinding>(R.layo
         )
         binding.ivShare.isVisible = movie.homepage.isNotEmpty()
         binding.tvMovieDetailTitle.text = movie.title
-        binding.tvMovieDetailGenres.text = movie.genres.asSequence().filter { it.name != null }.map { it.name }.joinToString(", ")
+        binding.tvMovieDetailGenres.text = movie.genres.asSequence().map { it.name }.joinToString(", ")
         binding.tvMovieDetailReleaseDate.text = movie.releaseDate
         binding.rbMovieDetailAverageRating.rating = movie.voteAverage.toFloat() / 2
         binding.tvMovieRuntime.text = "${movie.runtime / 60}h ${movie.runtime % 60}m"
@@ -171,7 +168,7 @@ class MovieDetailedFragment: BaseFragment<MovieDetailViewFragmentBinding>(R.layo
             if(movie.isFavourite) R.drawable.baseline_favorite_24 else R.drawable.outline_favorite_border_24_black
         )
         binding.tvMovieDescription.text = movie.overview
-        binding.tvMovieCast.text = movie.credits?.cast?.asSequence()?.map { it.name }?.joinToString(", ")
+        binding.tvMovieCast.text = movie.cast.asSequence().map { it.name }.joinToString(", ")
     }
 
     private fun handleError(errorMessage: String) {

@@ -1,7 +1,6 @@
 package com.vasberc.data.repo
 
 import com.vasberc.data.configuration.Configuration
-import com.vasberc.data.models.Movie
 import com.vasberc.data.models.MovieDetailed
 import com.vasberc.data.models.MovieReview
 import com.vasberc.data.models.SimilarMovie
@@ -14,12 +13,13 @@ import com.vasberc.data.utils.ResultState
 import com.vasberc.data.utils.parseResponse
 import com.vasberc.data_local.repo.MoviesLocalRepo
 import com.vasberc.data_remote.repo.MoviesRemoteRepo
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Single
 
@@ -48,8 +48,35 @@ class MoviesRepoImpl(private val moviesLocalRepo: MoviesLocalRepo, private val m
                     asErrorModel(responseCode)
                 }
             )
+
+            //Handling for caching
+            if(response is ResultState.Success) {
+                cacheMovie(response.data)
+            } else {
+                //Error response
+                val movie = getCachedMovie(movieId)
+                if(movie != null) {
+                    //If the movie was cached, return it and stop the emissions
+                    emit(ResultState.Success(movie))
+                    return@flow
+                }
+            }
+
             emit(response)
+
         }.flowOn(Dispatchers.IO)
+    }
+
+    private suspend fun getCachedMovie(movieId: Int): MovieDetailed? {
+        return moviesLocalRepo.getDetailedCachedMovieById(movieId)?.asMovieDetailed()
+    }
+
+    private suspend fun cacheMovie(movieDetailed: MovieDetailed) {
+        coroutineScope {
+            launch {
+                moviesLocalRepo.cacheDetaildMovie(movieDetailed.asMovieDetailedEntityWithRelations())
+            }
+        }
     }
 
     override fun getReviewsByMovieId(movieId: Int): Flow<ResultState<List<MovieReview>>> {
@@ -60,7 +87,7 @@ class MoviesRepoImpl(private val moviesLocalRepo: MoviesLocalRepo, private val m
                 successMapper = {
                     asMovieReviews(
                         imageBaseUrl = Configuration.images?.secureBaseUrl ?: "",
-                        imageSize = Configuration.images?.profileSizes?.get(0) ?: ""
+                        imageSize = Configuration.images?.profileSizes?.get(1) ?: ""
                     )
                 },
                 serverErrorMapper = {
