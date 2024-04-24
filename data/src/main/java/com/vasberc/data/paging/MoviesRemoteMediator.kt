@@ -147,6 +147,7 @@ class MoviesRemoteMediator(private val moviesDao: MoviesDao, private val remoteK
                 position = 20 * (page - 1) + index
             )
         }
+        Timber.d("Hellooooooooo Ready to save new data")
         remoteKeysDao.insertAll(remoteKeys)
         moviesDao.insertAllMovies(movieEntities)
         //Every time we load the 1st page, we cache the response

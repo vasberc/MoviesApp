@@ -14,9 +14,9 @@ sealed class ResultState <out T: Any> {
         onError: ((ErrorModel) -> Unit)? = null
     ) {
         when(this) {
-            is ResultState.Loading -> onLoading?.invoke()
-            is ResultState.Error -> onError?.invoke(this.error)
-            is ResultState.Success -> onSuccess?.invoke(this.data)
+            is Loading -> onLoading?.invoke()
+            is Error -> onError?.invoke(this.error)
+            is Success -> onSuccess?.invoke(this.data)
         }
     }
 }

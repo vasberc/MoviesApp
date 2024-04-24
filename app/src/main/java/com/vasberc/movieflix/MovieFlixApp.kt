@@ -35,6 +35,7 @@ class MovieFlixApp: Application() {
             moviesDao.clearAllEntities()
             val remoteKeysDao: MovieRemoteKeysDao by inject()
             remoteKeysDao.clearRemoteKeys()
+            Timber.d("Hellooooooooo Data cleared")
         }
     }
 
