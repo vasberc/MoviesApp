@@ -1,4 +1,4 @@
-MoviewApp
+MovieApp
 - MVVM
 - Retrofit
 - Modularization
